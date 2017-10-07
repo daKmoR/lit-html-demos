@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+<body>
+
+<script type="module">
+  import {html, render} from '../node_modules/lit-html/lit-html.js';
+
+  class MyElement extends HTMLElement {
+
+    constructor() {
+      super();
+      if (!this.shadowRoot) {
+        this.attachShadow({mode: 'open'});
+      }
+      this.shadyTemplate = document.createElement('template');
+      this.shadyPrepared = false;
+      this.header = 'My Header';
+    }
+
+    connectedCallback() {
+      this.update();
+    }
+
+    render() {
+      return html`
+        <style>
+          h3 {
+            color: orange;
+          }
+        </style>
+        ${this.dynamicCss}
+        <h3>${this.header}</h3>
+        <p>some more text</p>
+      `;
+    }
+
+    update() {
+      this._render(this.render(), this.shadowRoot);
+    }
+
+    _render(what, where) {
+      render(what, where);
+
+      if (typeof ShadyCSS === 'object') {
+        if (this.shadyPrepared === false) {
+          this.shadyTemplate.innerHTML = this.shadowRoot.innerHTML;
+          ShadyCSS.prepareTemplate(this.shadyTemplate, this.localName);
+          this.shadyPrepared = true;
+        }
+        ShadyCSS.styleElement(this);
+
+        if (!ShadyCSS.nativeShadow) {
+          this.shadowRoot.querySelectorAll('style').forEach((styleNode) => {
+            styleNode.remove();
+          });
+        }
+      }
+    }
+
+    get dynamicCss() {
+      return html`
+        <style>
+          p {
+            color: red;
+          }
+        </style>
+      `;
+    }
+
+    updateShady() {
+      this.shadyPrepared = false;
+      this.update();
+    }
+
+  }
+
+  customElements.define('my-element', MyElement);
+
+</script>
+
+<h3>Demo</h3>
+
+<my-element></my-element>
+
+</body>
+</html>

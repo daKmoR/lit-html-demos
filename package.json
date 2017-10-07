@@ -1,0 +1,20 @@
+{
+  "name": "lit-html-demos",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "lit-html": "^0.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "polymer serve",
+    "test": "polymer test --skip-selenium-install",
+    "lint": "eslint *.html && polymer lint -i *.html"
+  },
+  "author": "",
+  "license": "ISC"
+}

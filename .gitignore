@@ -1,0 +1,24 @@
+## editors
+/.idea
+/.vscode
+
+## system files
+.DS_Store
+
+## npm
+/node_modules/
+/npm-debug.log
+
+## bower
+/bower_components*/
+/bower-*.json
+
+## for our builds
+/lib/
+
+## temp folders
+/.tmp/
+
+## testing
+/wct.conf.js
+/wct.conf.json

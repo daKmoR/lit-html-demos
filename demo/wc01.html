@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+<body>
+
+<script type="module">
+  import {html, render} from '../node_modules/lit-html/lit-html.js';
+
+  class MyElement extends HTMLElement {
+
+    constructor() {
+      super();
+      if (!this.shadowRoot) {
+        this.attachShadow({mode: 'open'});
+      }
+    }
+
+    connectedCallback() {
+      this.update();
+    }
+
+    render() {
+      return html`
+        <h3>${this.header}</h3>
+        <p>some more text</p>
+      `;
+    }
+
+    update() {
+      this._render(this.render(), this.shadowRoot);
+    }
+
+    _render(what, where) {
+      render(what, where);
+    }
+  }
+
+  customElements.define('my-element', MyElement);
+
+</script>
+
+<h3>Demo</h3>
+
+<my-element></my-element>
+
+</body>
+</html>

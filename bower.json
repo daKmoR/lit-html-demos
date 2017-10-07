@@ -1,0 +1,6 @@
+{
+  "name": "lit-html-demos",
+  "devDependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  }
+}

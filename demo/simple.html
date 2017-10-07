@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+<body>
+
+<div id="demo"></div>
+
+<script type="module">
+  import {html, render} from '../node_modules/lit-html/lit-html.js';
+
+  let header = 'Initial Value (will change in 2 seconds)';
+  const demo = document.getElementById('demo');
+
+  function init() {
+    update();
+
+    setTimeout(() => {
+      header = 'Changed Value!';
+      update();
+    }, 2000);
+  }
+
+  function myRender() {
+    return html`
+      <h2>${header}</h2>
+      <p>some static content</p>
+    `;
+  }
+
+  function update() {
+    render(myRender(), demo);
+  }
+  init();
+</script>
+</body>
+</html>
