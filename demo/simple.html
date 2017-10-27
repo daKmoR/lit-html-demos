@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Symbol"></script>
+<script src="../../../node_modules/@webcomponents/template/template.js"></script>
 
 <body>
 
@@ -12,6 +12,7 @@
   import {html, render} from '../node_modules/lit-html/lit-html.js';
 
   let header = 'Initial Value (will change in 2 seconds)';
+  let stuff = 'now';
   const demo = document.getElementById('demo');
 
   function init() {
@@ -25,7 +26,10 @@
 
   function myRender() {
     return html`
+      <p>static top content</p>
       <h2>${header}</h2>
+      <p>middle</p>
+      <h3>${stuff}</h3>
       <p>some static content</p>
     `;
   }

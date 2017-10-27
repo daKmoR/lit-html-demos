@@ -7,6 +7,8 @@
     "test": "test"
   },
   "dependencies": {
+    "@webcomponents/template": "^1.0.0",
+    "@webcomponents/webcomponentsjs": "^1.0.14",
     "lit-html": "^0.7.1"
   },
   "devDependencies": {},

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Symbol"></script>
+<script src="../../../node_modules/@webcomponents/template/template.js"></script>
+
+<body>
+
+    <button onclick="run();">add 1000</button>
+    <div id="demo"></div>
+
+<script type="module">
+
+var startTime;
+var lastMeasure;
+
+var startMeasure = function(name) {
+    startTime = performance.now();
+    lastMeasure = name;
+};
+var stopMeasure = function() {
+    window.setTimeout(function() {
+        var stop = performance.now();
+        console.log(lastMeasure+" took "+(stop-startTime));
+    }, 0);
+};
+
+  import {html, render} from '../node_modules/lit-html/lit-html.js';
+
+  const demo = document.getElementById('demo');
+  let did = 1;
+  let data = [];
+
+  function _random(max) {
+    return Math.round(Math.random() * 1000) % max;
+  }
+
+  function buildData(count) {
+    var adjectives = ["pretty", "large", "big", "small", "tall", "short", "long", "handsome", "plain", "quaint", "clean", "elegant", "easy", "angry", "crazy", "helpful", "mushy", "odd", "unsightly", "adorable", "important", "inexpensive", "cheap", "expensive", "fancy"];
+    var colours = ["red", "yellow", "blue", "green", "pink", "brown", "purple", "brown", "white", "black", "orange"];
+    var nouns = ["table", "chair", "house", "bbq", "desk", "car", "pony", "cookie", "sandwich", "burger", "pizza", "mouse", "keyboard"];
+    var data = [];
+    for (var i = 0; i < count; i++) {
+      data.push({ id: did++, label: adjectives[_random(adjectives.length)] + " " + colours[_random(colours.length)] + " " + nouns[_random(nouns.length)] });
+    }
+    return data;
+  }
+
+  window.run = function() {
+    data = buildData(1000);
+    startMeasure('run');
+    update();
+    stopMeasure();
+  }
+
+  function myRender() {
+    return html`
+      <table class="table table-hover table-striped test-data">
+        <tbody>
+          ${data.map(item => html`
+            <tr class="">
+              <td class="col-md-1">${item.id})</td>
+              <td class="col-md-4">
+                <a on-tap="select">${item.label}</a>
+              </td>
+              <td class="col-md-1"><a on-tap="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <td class="col-md-6"></td>
+            </tr>
+          `)}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function update() {
+    render(myRender(), demo);
+  }
+  update();
+</script>
+</body>
+</html>
