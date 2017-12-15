@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Symbol"></script>
+<script src="../../../node_modules/@webcomponents/template/template.js"></script>
+
+<body>
+
+<div id="container"></div>
+
+<script type="module">
+  import { html, render } from '../node_modules/lit-html/lit-html.js';
+  import { repeat } from '../node_modules/lit-html/lib/repeat.js';
+
+  let items = [];
+  for (var i = 0; i < 10; i++) {
+    items.push({ text: "Example " + Math.random(), "id": i });
+  }
+  const container = document.getElementById('container');
+
+  const template = (items) => html`
+    ${repeat(items, (el) => el.id, (el, index) => html`
+      <div>
+        <span>stuff</span><span>${el.text}</span>
+      </div>
+    `)}
+
+    <hr />
+
+    ${items.map(el => html`
+      <div>
+        <span>stuff</span><span>${el.text}</span>
+      </div>
+    `)}
+  `;
+
+  render(template(items), container);
+  
+  setTimeout(clearInterval, 100000, setInterval(function () {
+    // let item = items.shift();
+    // items.push(item);
+
+    // swap items
+    let b = items[2];
+    items[2] = items[3];
+    items[3] = b;    
+  
+    render(template(items), container);
+  }.bind(this), 1000));
+
+</script>
+</body>
+</html>
